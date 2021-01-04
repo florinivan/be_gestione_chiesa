@@ -1,2 +1,2 @@
 # be_gestione_ghiesa
-API for gestione della chiesa
+API per la gestione della chiesa
