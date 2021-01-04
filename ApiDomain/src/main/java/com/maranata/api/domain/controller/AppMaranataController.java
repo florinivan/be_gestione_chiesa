@@ -1,7 +1,7 @@
-package com.maranata.AppMaranata.controller;
+package com.maranata.api.domain.controller;
 
-import com.maranata.AppMaranata.entity.Persona;
-import com.maranata.AppMaranata.service.PersonaService;
+import com.maranata.api.domain.entity.Persona;
+import com.maranata.api.domain.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

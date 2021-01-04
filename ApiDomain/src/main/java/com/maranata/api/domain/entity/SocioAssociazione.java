@@ -1,4 +1,4 @@
-package com.maranata.AppMaranata.entity;
+package com.maranata.api.domain.entity;
 
 import lombok.*;
 

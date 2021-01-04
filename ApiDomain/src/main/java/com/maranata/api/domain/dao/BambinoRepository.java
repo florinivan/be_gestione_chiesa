@@ -1,6 +1,6 @@
-package com.maranata.AppMaranata.dao;
+package com.maranata.api.domain.dao;
 
-import com.maranata.AppMaranata.entity.Bambino;
+import com.maranata.api.domain.entity.Bambino;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BambinoRepository extends JpaRepository<Bambino,String> {

@@ -1,8 +1,7 @@
-package com.maranata.AppMaranata.dao;
+package com.maranata.api.domain.dao;
 
-import com.maranata.AppMaranata.entity.Persona;
+import com.maranata.api.domain.entity.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

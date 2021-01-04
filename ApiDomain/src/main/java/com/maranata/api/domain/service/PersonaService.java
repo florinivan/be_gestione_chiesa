@@ -1,7 +1,7 @@
-package com.maranata.AppMaranata.service;
+package com.maranata.api.domain.service;
 
-import com.maranata.AppMaranata.dao.PersonaRepository;
-import com.maranata.AppMaranata.entity.Persona;
+import com.maranata.api.domain.dao.PersonaRepository;
+import com.maranata.api.domain.entity.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

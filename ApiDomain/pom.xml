@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.maranata</groupId>
-	<artifactId>App-Maranata</artifactId>
+	<artifactId>Api-Domain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>App-Maranata</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Api-Domain</name>
+	<description>Api Domain for members management </description>
 
 	<properties>
 		<java.version>1.8</java.version>
