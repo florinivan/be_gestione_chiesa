@@ -14,7 +14,8 @@ public class SocioAssociazione implements Serializable{
 
     @Id
     @Column(name="id_socio")
-    private int idSocio;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idSocio;
 
     @ManyToOne
     @JoinColumn(name="CODICE_FISCALE",referencedColumnName = "ID_CODICE_FISCALE")
@@ -38,7 +39,4 @@ public class SocioAssociazione implements Serializable{
     @Column(name = "FLAG_CD")
     private String flagCd;
 
-    @ManyToOne
-    @JoinColumn(name = "indirizzo_residenza", referencedColumnName = "id_ind_residenza")
-    private IndirizzoResidenza indirizzoResidenza;
 }

@@ -12,8 +12,9 @@ import java.io.Serializable;
 public class Bambino  implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_bambino")
-    private int idBambino;
+    private long idBambino;
 
     @ManyToOne
     @JoinColumn(name="CODICE_FISCALE",referencedColumnName = "ID_CODICE_FISCALE")

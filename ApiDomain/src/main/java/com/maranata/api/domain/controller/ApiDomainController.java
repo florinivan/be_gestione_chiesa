@@ -9,14 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("v1/domain")
 public class ApiDomainController {
-
-    @Autowired
-    PersonaService personaService;
-
-    @GetMapping("/{name}")
-    public ResponseEntity <List<Persona>> fetchAllPersonaByName(@PathVariable(name="name")String name) {
-        return ResponseEntity.ok(personaService.getAllPersoneByName(name));
-    }
 
 }

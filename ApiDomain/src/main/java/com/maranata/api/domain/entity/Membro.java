@@ -11,8 +11,9 @@ import java.io.Serializable;
 public class Membro implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_membro")
-    private int idMembro;
+    private long idMembro;
 
     @ManyToOne
     @JoinColumn(name="CODICE_FISCALE",referencedColumnName = "ID_CODICE_FISCALE")
@@ -62,9 +63,5 @@ public class Membro implements Serializable {
 
     @Column(name = "CENA_DEL_SIGNORE")
     private String cenaDelSignore;
-
-    @ManyToOne
-    @JoinColumn(name = "indirizzo_residenza", referencedColumnName = "id_ind_residenza")
-    private IndirizzoResidenza indirizzoResidenza;
 
 }
