@@ -11,7 +11,7 @@ public interface PersonaRepository extends JpaRepository<Persona,String> {
 
     List<Persona> findAllPersonaByNome(String nome);
 
-    @Query("SELECT p FROM Persona p WHERE EXISTS ( SELECT m FROM Membro m WHERE p.codiceFiscale = m.persona ) OR EXISTS (SELECT b FROM Bambino b WHERE p.codiceFiscale = b.persona)")
+    @Query("SELECT p FROM Persona p WHERE EXISTS ( SELECT m FROM Membro m WHERE p.id = m.persona.id ) OR EXISTS (SELECT b FROM Bambino b WHERE p.id = b.persona.id)")
     List<Persona> findAllMembriBambini();
 
 

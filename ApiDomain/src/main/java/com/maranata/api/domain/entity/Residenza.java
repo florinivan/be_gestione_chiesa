@@ -10,8 +10,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "indirizzo_residenza")
-
-public class IndirizzoResidenza {
+public class Residenza {
 
     @Id
     @Column(name ="ID_IND_RESIDENZA")

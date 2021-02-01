@@ -17,7 +17,7 @@ public class Bambino  implements Serializable{
     private long idBambino;
 
     @ManyToOne
-    @JoinColumn(name="CODICE_FISCALE",referencedColumnName = "ID_CODICE_FISCALE")
+    @JoinColumn(name="id_persona",referencedColumnName = "id")
     private Persona persona;
 
     @Column(name="CODICE_FISCALE_PADRE")

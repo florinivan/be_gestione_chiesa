@@ -7,10 +7,12 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name="persone")
-
 public class Persona {
 
     @Id
+    @Column(name="ID")
+    private Long id;
+
     @Column(name = "ID_CODICE_FISCALE")
     private String codiceFiscale;
 
@@ -28,7 +30,7 @@ public class Persona {
 
     @ManyToOne
     @JoinColumn(name="indirizzo_residenza",referencedColumnName = "id_ind_residenza")
-    private IndirizzoResidenza indirizzoResidenza;
+    private Residenza residenza;
 
 }
 
