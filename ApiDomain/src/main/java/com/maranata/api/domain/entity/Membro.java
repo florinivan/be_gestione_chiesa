@@ -16,7 +16,7 @@ public class Membro implements Serializable {
     private long idMembro;
 
     @ManyToOne
-    @JoinColumn(name="CODICE_FISCALE",referencedColumnName = "ID_CODICE_FISCALE")
+    @JoinColumn(name="id_persona",referencedColumnName = "id")
     private Persona persona;
 
     @Column(name = "EMAIL")

@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "soci_associazione")
-
 public class SocioAssociazione implements Serializable{
 
     @Id
@@ -18,7 +17,7 @@ public class SocioAssociazione implements Serializable{
     private Long idSocio;
 
     @ManyToOne
-    @JoinColumn(name="CODICE_FISCALE",referencedColumnName = "ID_CODICE_FISCALE")
+    @JoinColumn(name="id_persona",referencedColumnName = "id")
     private Persona persona;
 
     @Column(name = "EMAIL")
