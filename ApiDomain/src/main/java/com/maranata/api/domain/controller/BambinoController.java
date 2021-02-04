@@ -2,58 +2,62 @@ package com.maranata.api.domain.controller;
 
 import com.maranata.api.domain.dao.BambinoRepository;
 import com.maranata.api.domain.entity.Bambino;
+import com.maranata.api.domain.entity.Membro;
+import com.maranata.api.domain.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/v1/domain/bambini")
+@RequestMapping("/bambini")
 public class BambinoController {
 
     @Autowired
     BambinoRepository bambinoRepository;
+    @Autowired
+    PersonaService personaService;
 
-    @GetMapping("/bambini")
-    public List<Bambino> getAllBambini(){
-        return bambinoRepository.findAll();
+    @GetMapping
+    public ResponseEntity<List<Bambino>> findAll(){
+       bambinoRepository.findAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/bambini/{id_bambino}")
-    public Bambino getBambinoById(@PathVariable Long id){
-        return bambinoRepository.findById(id).get();
+    @GetMapping("/{codiceFiscale}")
+    public ResponseEntity<Bambino> getBambinoByCf(@PathVariable String codiceFiscale){
+      bambinoRepository.existBambinoByCodiceFiscale(codiceFiscale);
+      return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/bambini/{codice_fiscale}")
-    public Boolean existBAmbinoByCodiceFiscale(@PathVariable String codiceFiscale){
-        return bambinoRepository.existBambinoByCodiceFiscale(codiceFiscale);
-    }
-
-    @GetMapping("/bambini/{codice_fiscale_padre}")
+    @GetMapping("/{codice_fiscale_padre}")
     public Bambino getBambinoByCfPadre(@PathVariable String codiceFiscalePadre){
        return bambinoRepository.findBambinoByCfPadre(codiceFiscalePadre);
     }
 
-    @GetMapping("/bambini/{codice_fiscale_madre}")
+    @GetMapping("/{codice_fiscale_madre}")
     public Bambino getBambinoByCfMadre(@PathVariable String codiceFiscaleMadre) {
         return bambinoRepository.findBambinoByCfMadre(codiceFiscaleMadre);
     }
 
-    @PostMapping("/bambini")
-    public Bambino insertBambino(@RequestBody Bambino nuovoBambino){
-        return bambinoRepository.save(nuovoBambino);
+    @PostMapping("/add")
+    public ResponseEntity<Bambino> addBambino(@RequestBody Bambino bambino) {
+        return new ResponseEntity<>(personaService.addPersonaBambino(bambino),HttpStatus.OK);
     }
 
-    @PutMapping("/bambini/{id_bambino}")
-    public Bambino saveAndUpdateBambino(@RequestBody Bambino nuovoBambino,@PathVariable Long id){
-        return bambinoRepository.findById(id).map(bambino -> {
-            bambino.setCodiceFiscaleMadre(bambino.getCodiceFiscaleMadre());
-            bambino.setCodiceFiscalePadre(bambino.getCodiceFiscalePadre());
-            return bambinoRepository.save(bambino);
-        }).orElseGet(()->{
-            nuovoBambino.setIdBambino(id);
-            return bambinoRepository.save(nuovoBambino);
-        });
+    @PutMapping("/{id_bambino}")
+    public ResponseEntity<Bambino> updateBambino(@RequestBody Bambino bambino,@PathVariable Long id) {
+        Optional<Bambino> newBambino = bambinoRepository.findById(id);
+        if (newBambino.isPresent()) {
+            Bambino _bambino = newBambino.get();
+            _bambino.setCodiceFiscaleMadre(bambino.getCodiceFiscaleMadre());
+            _bambino.setCodiceFiscalePadre(bambino.getCodiceFiscalePadre());
+            return new ResponseEntity<>(bambinoRepository.save(_bambino), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
-//TODO implements findAll, findByIdGenitore,insert, update

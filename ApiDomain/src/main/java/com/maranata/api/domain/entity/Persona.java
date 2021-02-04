@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Persona {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
     private Long id;
 
