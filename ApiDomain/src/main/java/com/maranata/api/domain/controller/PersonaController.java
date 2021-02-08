@@ -2,6 +2,7 @@ package com.maranata.api.domain.controller;
 
 import com.maranata.api.domain.dao.PersonaRepository;
 import com.maranata.api.domain.entity.Persona;
+import com.maranata.api.domain.entity.Residenza;
 import com.maranata.api.domain.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,8 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Persona>> findAllById(@PathVariable Long id) {
-        return new ResponseEntity<>(personaService.findAllById(id), HttpStatus.OK);
+    public ResponseEntity<Optional<Persona>> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(personaService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/{codiceFiscale}")
@@ -51,18 +52,9 @@ public class PersonaController {
         return new ResponseEntity<>(personaService.updatePersona(id,persona),HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteAllPersone() {
-        try {
-            personaService.deleteAllPersone();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @DeleteMapping("/{codiceFiscale}")
-    public ResponseEntity<Persona>deleteByCodiceFiscale( @PathVariable String codiceFiscale) {
-        return new ResponseEntity<>(personaService.deleteByCodiceFiscale(codiceFiscale), HttpStatus.OK);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deletePersone(@PathVariable Long idPersona) {
+       personaRepository.deleteById(idPersona);
+       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -1,6 +1,8 @@
 package com.maranata.api.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -17,6 +19,7 @@ public class Bambino  implements Serializable{
     private long idBambino;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="id_persona",referencedColumnName = "id")
     private Persona persona;
 

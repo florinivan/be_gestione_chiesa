@@ -1,6 +1,8 @@
 package com.maranata.api.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -30,7 +32,8 @@ public class Persona {
     private String maschioFemmina;
 
     @ManyToOne
-    @JoinColumn(name="indirizzo_residenza",referencedColumnName = "id_ind_residenza")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="residenza",referencedColumnName = "id_residenza")
     private Residenza residenza;
 
 }

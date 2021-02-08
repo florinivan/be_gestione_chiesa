@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "soci_associazione")
-public class SocioAssociazione implements Serializable{
+public class Socio implements Serializable{
 
     @Id
     @Column(name="id_socio")

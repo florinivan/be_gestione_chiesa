@@ -13,5 +13,4 @@ public interface PersonaRepository extends JpaRepository<Persona,Long> {
     @Query("SELECT p FROM Persona p WHERE EXISTS ( SELECT m FROM Membro m WHERE p.id = m.persona.id ) OR EXISTS (SELECT b FROM Bambino b WHERE p.id = b.persona.id)")
     List<Persona> findAllMembriBambini();
 
-    Persona deleteByCodiceFiscale(String codiceFiscale);
 }
