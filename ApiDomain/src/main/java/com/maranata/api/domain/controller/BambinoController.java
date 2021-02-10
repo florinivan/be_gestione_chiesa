@@ -1,8 +1,10 @@
 package com.maranata.api.domain.controller;
 
 import com.maranata.api.domain.dao.BambinoRepository;
+import com.maranata.api.domain.dao.PersonaRepository;
 import com.maranata.api.domain.entity.Bambino;
 import com.maranata.api.domain.entity.Membro;
+import com.maranata.api.domain.entity.Persona;
 import com.maranata.api.domain.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,17 +22,18 @@ public class BambinoController {
     BambinoRepository bambinoRepository;
     @Autowired
     PersonaService personaService;
+    @Autowired
+    PersonaRepository personaRepository;
 
     @GetMapping
     public ResponseEntity<List<Bambino>> findAll(){
-       bambinoRepository.findAll();
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Bambino> bambino = bambinoRepository.findAll();
+        return new ResponseEntity<>(bambino,HttpStatus.OK);
     }
 
-    @GetMapping("/{codiceFiscale}")
-    public ResponseEntity<Bambino> getBambinoByCf(@PathVariable String codiceFiscale){
-      bambinoRepository.existBambinoByCodiceFiscale(codiceFiscale);
-      return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkBambinoByCf(@RequestParam String codiceFiscale) {
+        return new ResponseEntity<Boolean>( bambinoRepository.existBambinoBycodiceFiscale(codiceFiscale),HttpStatus.OK);
     }
 
     @GetMapping("/{codice_fiscale_padre}")
@@ -59,5 +62,11 @@ public class BambinoController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<HttpStatus>deleteBambini(@PathVariable Long id,@PathVariable Bambino bambino){
+        personaRepository.deleteById(bambino.getPersona().getId());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

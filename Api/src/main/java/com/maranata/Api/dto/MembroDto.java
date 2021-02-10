@@ -4,8 +4,9 @@ import lombok.Data;
 
 
 @Data
-public class MembroDto extends PersonaDto{
+public class MembroDto {
 
+    private PersonaDto persona;
     private String email;
     private String telefono;
     private int dataBattesimo;

@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface MembroRepository extends JpaRepository<Membro, Long> {
 
-    @Query("SELECT COUNT(m)>0 FROM Membro m WHERE m.persona.codiceFiscale =:codiceFiscale")
-    Boolean existMembroByCodiceFiscale(String codiceFiscale);
+    @Query("SELECT COUNT(m)>0 FROM Membro m WHERE m.persona.codiceFiscale =:codiceFiscale ")
+    Boolean existMembroBycodiceFiscale(String codiceFiscale);
 }
 
 

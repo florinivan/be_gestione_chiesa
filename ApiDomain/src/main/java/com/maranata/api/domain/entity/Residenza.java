@@ -2,19 +2,17 @@ package com.maranata.api.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "indirizzo_residenza")
+@Table(name ="residenza")
 public class Residenza {
 
     @Id
-    @Column(name ="ID_IND_RESIDENZA")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="ID_RESIDENZA")
+    private long id;
 
     @Column(name = "VIA")
     private String via;

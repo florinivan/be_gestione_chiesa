@@ -1,9 +1,7 @@
 package com.maranata.api.domain.controller;
 
 import com.maranata.api.domain.dao.MembroRepository;
-import com.maranata.api.domain.dao.PersonaRepository;
 import com.maranata.api.domain.entity.Membro;
-import com.maranata.api.domain.entity.Persona;
 import com.maranata.api.domain.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,17 +21,16 @@ public class MembroController {
 
     @GetMapping
     public ResponseEntity<List<Membro>> findAll(){
-        membroRepository.findAll();
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Membro> membro = membroRepository.findAll();
+        return new ResponseEntity<>(membro,HttpStatus.OK);
     }
 
-    @GetMapping("/{codiceFiscale}")
-    public ResponseEntity<Membro> findMembroByCf(@PathVariable String codiceFiscale) {
-        membroRepository.existMembroByCodiceFiscale(codiceFiscale);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkMembroByCf(@RequestParam String codiceFiscale) {
+        return new ResponseEntity<Boolean>( membroRepository.existMembroBycodiceFiscale(codiceFiscale),HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<Membro> addMembro( @RequestBody Membro membro) {
         return new ResponseEntity<>(personaService.addPersonaMembro(membro),HttpStatus.OK);
     }
@@ -54,9 +51,9 @@ public class MembroController {
             return new ResponseEntity<>(membroRepository.save(membro),HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id_membro}")
-    public ResponseEntity<HttpStatus>deleteMembro(@PathVariable Long id){
-        membroRepository.deleteById(id);
+    @DeleteMapping
+    public ResponseEntity<HttpStatus>deleteMembri(){
+        membroRepository.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

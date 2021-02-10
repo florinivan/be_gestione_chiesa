@@ -1,12 +1,10 @@
 package com.maranata.api.domain.service;
 
-import com.maranata.api.domain.dao.BambinoRepository;
-import com.maranata.api.domain.dao.MembroRepository;
-import com.maranata.api.domain.dao.PersonaRepository;
+import com.maranata.api.domain.dao.*;
 import com.maranata.api.domain.entity.Bambino;
 import com.maranata.api.domain.entity.Membro;
 import com.maranata.api.domain.entity.Persona;
-import org.hibernate.annotations.Cascade;
+import com.maranata.api.domain.entity.Socio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class PersonaService {
 
-    //TODO  implement findAll method and insert method
-
     @Autowired
     PersonaRepository personaRepository;
     @Autowired
@@ -27,18 +23,22 @@ public class PersonaService {
     @Autowired
     BambinoRepository bambinoRepository;
     @Autowired
-    ResidenzaService residenzaService;
+    SocioRepository socioRepository;
+    @Autowired
+    ResidenzaRepository residenzaRepository;
+
+
 
     public List<Persona> findAll(){
         return personaRepository.findAll();
     }
 
-    public Optional<Persona> findAllById(long id){
+    public Optional<Persona> findById(long id){
         return personaRepository.findById(id);
     }
 
-    public Persona findPersonaByCodiceFiscale(String codiceFiscale) {
-        return personaRepository.findPersonaByCodiceFiscale(codiceFiscale);
+    public List<Persona> findPersonaByCf(String codiceFiscale) {
+        return personaRepository.findPersonaBycodiceFiscale(codiceFiscale);
     }
 
     /**
@@ -54,12 +54,13 @@ public class PersonaService {
      * @return
      */
     public List<Persona> findAllMembriBambiniByRepository(){
-        return  personaRepository.findAll().stream().filter(persona->membroRepository.existMembroByCodiceFiscale(persona.getCodiceFiscale()))
-                .filter(persona->bambinoRepository.existBambinoByCodiceFiscale(persona.getCodiceFiscale())).collect(Collectors.toList());
+        return  personaRepository.findAll().stream().filter(persona->membroRepository.existMembroBycodiceFiscale(persona.getCodiceFiscale()))
+                .filter(persona->bambinoRepository.existBambinoBycodiceFiscale(persona.getCodiceFiscale())).collect(Collectors.toList());
     }
 
+    @Transactional
     public Persona addPersona(Persona persona){
-        residenzaService.add(persona.getResidenza());
+        residenzaRepository.save(persona.getResidenza());
         return personaRepository.save(persona);
     }
 
@@ -75,6 +76,12 @@ public class PersonaService {
         return bambinoRepository.save(bambino);
     }
 
+    @Transactional
+    public Socio addPersonaSocio (Socio socio){
+        addPersona(socio.getPersona());
+        return socioRepository.save(socio);
+    }
+
     public Persona updatePersona(Long id,Persona newPersona){
         return personaRepository.findById(id).map(persona -> {
             persona.setNome(newPersona.getNome());
@@ -85,12 +92,9 @@ public class PersonaService {
         });
     }
 
-    public void deleteAllPersone(){
-        personaRepository.deleteAll();
+    public void deletePersona(Long idPersona){
+        Persona persona= personaRepository.findById(idPersona).get();
+        residenzaRepository.deleteById(persona.getResidenza().getId());
+        personaRepository.deleteById(idPersona);
     }
-
-    public Persona deleteByCodiceFiscale(String codiceFiscale){
-       return personaRepository.deleteByCodiceFiscale(codiceFiscale);
-    }
-
 }

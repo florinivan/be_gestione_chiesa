@@ -9,6 +9,6 @@ public class PersonaDto {
     private String nome;
     private String cognome;
     private String dataNascita;
-    private IndirizzoResidenzaDto indirizzoResidenzaDto;
+    private ResidenzaDto residenza;
 
 }
