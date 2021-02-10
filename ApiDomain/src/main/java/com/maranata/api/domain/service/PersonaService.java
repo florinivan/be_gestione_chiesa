@@ -6,6 +6,8 @@ import com.maranata.api.domain.entity.Membro;
 import com.maranata.api.domain.entity.Persona;
 import com.maranata.api.domain.entity.Socio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +36,7 @@ public class PersonaService {
     }
 
     public Optional<Persona> findById(long id){
-        return personaRepository.findById(id);
+        return personaRepository.findByid(id);
     }
 
     public List<Persona> findPersonaByCf(String codiceFiscale) {
@@ -82,14 +84,20 @@ public class PersonaService {
         return socioRepository.save(socio);
     }
 
-    public Persona updatePersona(Long id,Persona newPersona){
-        return personaRepository.findById(id).map(persona -> {
-            persona.setNome(newPersona.getNome());
-            persona.setCognome(newPersona.getCognome());
-            return personaRepository.save(persona);
-        }).orElseGet(() -> {
-            return null;
-        });
+    public ResponseEntity<Persona> updatePersona(Persona inPersona){
+        try {
+            Persona newPersona = personaRepository.findById(inPersona.getId()).orElseThrow(RuntimeException::new);
+            newPersona.setCognome(inPersona.getCognome());
+            newPersona.setNome(inPersona.getNome());
+            newPersona.setCodiceFiscale(inPersona.getCodiceFiscale());
+            newPersona.setMaschioFemmina(inPersona.getMaschioFemmina());
+            newPersona.setDataNascita(inPersona.getDataNascita());
+            newPersona.setResidenza(inPersona.getResidenza());
+            personaRepository.save(newPersona);
+            return ResponseEntity.ok(newPersona);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     public void deletePersona(Long idPersona){
