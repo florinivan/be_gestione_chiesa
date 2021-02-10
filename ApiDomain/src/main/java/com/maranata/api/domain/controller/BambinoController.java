@@ -31,10 +31,9 @@ public class BambinoController {
         return new ResponseEntity<>(bambino,HttpStatus.OK);
     }
 
-    @GetMapping("/{codiceFiscale}")
-    public ResponseEntity<Bambino> getBambinoByCf(@PathVariable String codiceFiscale){
-      bambinoRepository.existBambinoByCodiceFiscale(codiceFiscale);
-      return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkBambinoByCf(@RequestParam String codiceFiscale) {
+        return new ResponseEntity<Boolean>( bambinoRepository.existBambinoBycodiceFiscale(codiceFiscale),HttpStatus.OK);
     }
 
     @GetMapping("/{codice_fiscale_padre}")

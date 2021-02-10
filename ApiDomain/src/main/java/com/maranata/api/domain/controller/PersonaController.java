@@ -27,14 +27,9 @@ public class PersonaController {
         return new ResponseEntity<>(personaService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Persona>> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(personaService.findById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/{codiceFiscale}")
-    public ResponseEntity<Persona> findPersonaByCf(@PathVariable String codiceFiscale) {
-        return new ResponseEntity<>(personaService.findPersonaByCodiceFiscale(codiceFiscale), HttpStatus.OK);
+    @GetMapping("/find")
+    public ResponseEntity<List<Persona>> findPersonaByCf(@RequestParam String codiceFiscale) {
+        return new ResponseEntity<>(personaService.findPersonaByCf(codiceFiscale), HttpStatus.OK);
     }
 
     @GetMapping("/list/{codiceFiscale}")

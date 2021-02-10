@@ -25,13 +25,12 @@ public class MembroController {
         return new ResponseEntity<>(membro,HttpStatus.OK);
     }
 
-    @GetMapping("/{codiceFiscale}")
-    public ResponseEntity<Membro> findMembroByCf(@PathVariable String codiceFiscale) {
-        membroRepository.existMembroByCodiceFiscale(codiceFiscale);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkMembroByCf(@RequestParam String codiceFiscale) {
+        return new ResponseEntity<Boolean>( membroRepository.existMembroBycodiceFiscale(codiceFiscale),HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<Membro> addMembro( @RequestBody Membro membro) {
         return new ResponseEntity<>(personaService.addPersonaMembro(membro),HttpStatus.OK);
     }

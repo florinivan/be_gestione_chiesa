@@ -37,8 +37,8 @@ public class PersonaService {
         return personaRepository.findById(id);
     }
 
-    public Persona findPersonaByCodiceFiscale(String codiceFiscale) {
-        return personaRepository.findPersonaByCodiceFiscale(codiceFiscale);
+    public List<Persona> findPersonaByCf(String codiceFiscale) {
+        return personaRepository.findPersonaBycodiceFiscale(codiceFiscale);
     }
 
     /**
@@ -54,8 +54,8 @@ public class PersonaService {
      * @return
      */
     public List<Persona> findAllMembriBambiniByRepository(){
-        return  personaRepository.findAll().stream().filter(persona->membroRepository.existMembroByCodiceFiscale(persona.getCodiceFiscale()))
-                .filter(persona->bambinoRepository.existBambinoByCodiceFiscale(persona.getCodiceFiscale())).collect(Collectors.toList());
+        return  personaRepository.findAll().stream().filter(persona->membroRepository.existMembroBycodiceFiscale(persona.getCodiceFiscale()))
+                .filter(persona->bambinoRepository.existBambinoBycodiceFiscale(persona.getCodiceFiscale())).collect(Collectors.toList());
     }
 
     @Transactional
