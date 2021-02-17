@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonaRepository extends JpaRepository<Persona,Long> {
 
@@ -13,5 +14,6 @@ public interface PersonaRepository extends JpaRepository<Persona,Long> {
     @Query("SELECT p FROM Persona p WHERE EXISTS ( SELECT m FROM Membro m WHERE p.id = m.persona.id ) OR EXISTS (SELECT b FROM Bambino b WHERE p.id = b.persona.id)")
     List<Persona> findAllMembriBambini();
 
+    public Optional<Persona> findByid(Long id);
 
 }

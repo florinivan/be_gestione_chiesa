@@ -31,7 +31,7 @@ public class MembroController {
     }
 
     @PostMapping
-    public ResponseEntity<Membro> addMembro( @RequestBody Membro membro) {
+    public ResponseEntity<Membro> addPersonaMembro( @RequestBody Membro membro) {
         return new ResponseEntity<>(personaService.addPersonaMembro(membro),HttpStatus.OK);
     }
 
