@@ -1,56 +1,47 @@
 package com.maranata.Api.service;
 
-import com.maranata.Api.dto.BambinoDto;
-import com.maranata.Api.dto.MembroDto;
-import com.maranata.Api.dto.PersonaDto;
-import com.maranata.Api.feign.client.BambinoFeignClient;
-import com.maranata.Api.feign.client.MembroFeignClient;
-import com.maranata.Api.feign.client.PersonaFeignClient;
+import com.maranata.Api.dto.*;
+import com.maranata.Api.utils.MembroExistException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+
 
 @Service
 public class RegistrazioneMembroService {
 
     @Autowired
-    MembroFeignClient membroFeignClient;
+    MembroService membroService;
     @Autowired
-    PersonaFeignClient personaFeignClient;
+    PersonaService personaService;
     @Autowired
-    BambinoFeignClient bambinoFeignClient;
+    BambinoService bambinoService;
 
-    public MembroDto registrazioneMembro(MembroDto membroDto,String codiceFiscale){
-        if(membroDto!=null){
-        membroCheck(codiceFiscale);
-        return membroDto;}
-        else return null;
 
-    }
+    public RegistrazioneMembroDto registrazioneMembro(RegistrazioneMembroDto registrazioneMembroDto)  {
 
-    public Boolean membroCheck(String codiceFiscale){
-        return membroFeignClient.checkMembro(codiceFiscale);
-    }
-
-    public Boolean bambinoCheck(String codiceFiscale){
-        return bambinoFeignClient.checkBambino(codiceFiscale);
-    }
-    
-    public ResponseEntity<Collection<PersonaDto>> findBycodiceFiscale(String codiceFiscale){
-        return personaFeignClient.findBycodiceFiscale(codiceFiscale);
-    }
-
-    public PersonaDto personaAdd (PersonaDto personaDto){
-        return personaFeignClient.addPersona(personaDto);
-    }
-
-    public MembroDto membroAdd(MembroDto membroDto){
-        return membroFeignClient.membroAdd(membroDto);
-    }
-
-    public BambinoDto bambinoAdd(BambinoDto bambinoDto){
-        return bambinoFeignClient.addBambino(bambinoDto);
+        if (registrazioneMembroDto != null) {
+            MembroDto membroDto=registrazioneMembroDto.getMembroDto();
+            PersonaDto personaDto=registrazioneMembroDto.getMembroDto().getPersona();
+            ConiugeDto coniugeDto=registrazioneMembroDto.getConiugeDto();
+            if(membroService.membroCheck(membroDto.getPersona().getCodiceFiscale())){
+                throw new  MembroExistException(String.format("membro with cf %s already exists", membroDto.getPersona().getCodiceFiscale()));
+            }else{
+                Collection<PersonaDto> personaListDto = personaService.findBycodiceFiscale(membroDto.getPersona().getCodiceFiscale()).getBody();
+                if(personaListDto!=null && !personaListDto.isEmpty()){
+                    PersonaDto personaDtoByCF=personaListDto.stream().findAny().get();
+                    personaService.personaUpdate(personaDto,personaDtoByCF.getId());
+                    registrazioneMembroDto.setMembroDto(membroService.membroAdd(membroDto));
+                }else{
+                    registrazioneMembroDto.setMembroDto(membroService.membroPersonaAdd(membroDto));
+                }
+                registrazioneMembroDto.getBambini().forEach(bambinoDto->{
+                    bambinoService.bambinoAdd(bambinoDto);
+                });
+                personaService.coniugeAdd(coniugeDto);
+            }
+        }
+        return registrazioneMembroDto;
     }
 }

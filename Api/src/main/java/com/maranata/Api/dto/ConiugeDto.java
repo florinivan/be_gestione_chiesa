@@ -6,7 +6,6 @@ import lombok.Data;
 public class ConiugeDto  {
 
     private PersonaDto persona;
-    private String codiceFscale;
 
 }
 
