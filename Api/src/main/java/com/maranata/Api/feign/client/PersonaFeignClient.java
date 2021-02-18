@@ -1,5 +1,6 @@
 package com.maranata.Api.feign.client;
 
+import com.maranata.Api.dto.ConiugeDto;
 import com.maranata.Api.dto.MembroDto;
 import com.maranata.Api.dto.PersonaDto;
 import feign.Headers;
@@ -23,7 +24,12 @@ public interface PersonaFeignClient {
     ResponseEntity<Collection<PersonaDto>> findBycodiceFiscale(@RequestParam("codiceFiscale") String codiceFiscale);
 
     @PostMapping
-    PersonaDto addPersona(@RequestBody PersonaDto personaDto);
+    PersonaDto personaAdd(@RequestBody PersonaDto personaDto);
 
+    @PostMapping("/addConiuge")
+    ConiugeDto coniugeAdd(@RequestBody ConiugeDto coniugeDto);
+
+    @PatchMapping(path = "/{id}" )
+    PersonaDto personaUpdate(@RequestBody PersonaDto personaDto,@PathVariable Long id);
 
 }

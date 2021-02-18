@@ -21,7 +21,13 @@ public interface MembroFeignClient {
     @GetMapping("/check")
     Boolean  checkMembro (@RequestParam String codiceFiscale);
 
-    @PostMapping
+    @PostMapping("/add")
+    MembroDto membroPersonaAdd(@RequestBody MembroDto membroDto);
+
+    @PostMapping()
     MembroDto membroAdd(@RequestBody MembroDto membroDto);
+
+    @PatchMapping(path = "/{id_membro}" )
+    MembroDto membroUpdate(@RequestBody MembroDto membroDto,@PathVariable("id_membro") Long id);
 
 }

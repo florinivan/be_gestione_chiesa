@@ -2,11 +2,12 @@ package com.maranata.Api.dto;
 
 import lombok.Data;
 
-
 @Data
 public class MembroDto {
 
+    private Long id;
     private PersonaDto persona;
+    private String codiceFiscaleConiuge;
     private String email;
     private String telefono;
     private int dataBattesimo;
