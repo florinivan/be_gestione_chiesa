@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@FeignClient(value = "api-persone", url = "http://localhost:8082/rest/persone/", decode404= true)
+
 public interface PersonaFeignClient {
 
     public final String AUTH_TOKEN = "Authorization";
