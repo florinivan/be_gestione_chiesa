@@ -7,6 +7,6 @@ public class DateUtil {
 
     public static long getMiliseconds(LocalDate date){
         ZoneId zoneId = ZoneId.systemDefault();
-        return date.atStartOfDay(zoneId).toEpochSecond();
+        return date.atStartOfDay(zoneId).toInstant().toEpochMilli();
     }
 }

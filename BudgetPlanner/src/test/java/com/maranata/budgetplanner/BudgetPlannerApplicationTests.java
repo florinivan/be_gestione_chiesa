@@ -1,4 +1,4 @@
-package com.maranata.BudgetPlanner;
+package com.maranata.budgetplanner;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

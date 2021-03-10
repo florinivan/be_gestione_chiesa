@@ -2,6 +2,8 @@ package com.maranata.budgetplanner.entity;
 
 import lombok.Data;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,16 +23,12 @@ public class Budget {
 
     private String tags;
 
-    private float importoStimato;
+    private double importoStimato;
 
-    private float importoAttuale;
+    private double importoAttuale;
 
-    @ManyToMany
-    @JoinTable(
-            name="budget_transazioni",
-            joinColumns = @JoinColumn(name = "budget_id"),
-            inverseJoinColumns = @JoinColumn(name = "transazioni_id"))
-    private Set<Transazione> budgetTransazioni;
+    @Enumerated(EnumType.STRING)
+    private PeriodoBudget periodo;
 
     @ManyToOne
     @JoinColumn(name="categoria_id")
@@ -40,6 +38,5 @@ public class Budget {
     @JoinColumn(name="flusso_id")
     private  FlussoValidazione flusso;
 
-
-
 }
+

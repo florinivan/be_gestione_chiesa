@@ -25,7 +25,6 @@ public interface TransazioneFeignClient {
     @GetMapping("/findBy/{tipo}")
     @Headers("Content-Type: application/json")
     List<Transazione> getTransactionsByTipoAndDateBetween(@PathVariable TipoTransazione tipo,
-                                                          @RequestParam Long budgetId,
                                                           @RequestParam Long flussoId,
                                                           @RequestParam Long startDate,
                                                           @RequestParam Long endDate);

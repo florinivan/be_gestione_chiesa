@@ -17,6 +17,6 @@ public class FlussoValidazione {
 
     @ManyToOne
     @JoinColumn (name="stato_validazione_id")
-    private StatoValidazione statoValidazione;
+    private StatoValidazione stato;
 
 }

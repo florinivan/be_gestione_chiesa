@@ -3,20 +3,18 @@ package com.maranata.budgetplanner.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
+
 
 @Data
 @Entity
 @Table(name="transazioni")
-public class  Transazione {
+public class Transazione {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
    private Long data;
-
-   private double somma;
 
    private String descrizione;
 
@@ -26,8 +24,9 @@ public class  Transazione {
 
    private String tags;
 
-   @ManyToMany(mappedBy = "budgetTransazioni")
-   Set<Budget> budgets;
+   @ManyToOne
+   @JoinColumn(name="budget_id")
+   private Budget budget;
 
    @ManyToOne
    @JoinColumn(name="categoria_id")
