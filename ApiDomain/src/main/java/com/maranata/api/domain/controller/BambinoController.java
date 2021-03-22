@@ -1,10 +1,14 @@
 package com.maranata.api.domain.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.maranata.api.domain.dao.BambinoRepository;
 import com.maranata.api.domain.dao.PersonaRepository;
 import com.maranata.api.domain.entity.Bambino;
-import com.maranata.api.domain.entity.Membro;
-import com.maranata.api.domain.entity.Persona;
+import com.maranata.api.domain.service.BambinoService;
 import com.maranata.api.domain.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,12 +22,16 @@ import java.util.Optional;
 @RequestMapping("/bambini")
 public class BambinoController {
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     BambinoRepository bambinoRepository;
     @Autowired
     PersonaService personaService;
     @Autowired
     PersonaRepository personaRepository;
+    @Autowired
+    BambinoService bambinoService;
 
     @GetMapping
     public ResponseEntity<List<Bambino>> findAll(){
@@ -51,16 +59,17 @@ public class BambinoController {
         return new ResponseEntity<>(personaService.addPersonaBambino(bambino),HttpStatus.OK);
     }
 
-    @PutMapping("/{id_bambino}")
-    public ResponseEntity<Bambino> updateBambino(@RequestBody Bambino bambino,@PathVariable Long id) {
-        Optional<Bambino> newBambino = bambinoRepository.findById(id);
-        if (newBambino.isPresent()) {
-            Bambino _bambino = newBambino.get();
-            _bambino.setCodiceFiscaleMadre(bambino.getCodiceFiscaleMadre());
-            _bambino.setCodiceFiscalePadre(bambino.getCodiceFiscalePadre());
-            return new ResponseEntity<>(bambinoRepository.save(_bambino), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PatchMapping(path = "/{id_bambino}" )
+    public ResponseEntity<Bambino> updateBambino(@PathVariable Long id, @RequestBody JsonPatch inBambino) {
+        try {
+            Bambino bambino = bambinoRepository.findById(id).orElseThrow(RuntimeException::new);
+            Bambino bambinoPatched = applyPatchToCustomer(inBambino, bambino);
+            bambinoService.updateBambino(bambinoPatched);
+            return ResponseEntity.ok(bambinoPatched);
+        } catch (JsonPatchException | JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
@@ -69,4 +78,10 @@ public class BambinoController {
         personaRepository.deleteById(bambino.getPersona().getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    private Bambino applyPatchToCustomer(JsonPatch patch, Bambino targetBambino) throws JsonPatchException, JsonProcessingException {
+        JsonNode patched = patch.apply(objectMapper.convertValue(targetBambino, JsonNode.class));
+        return objectMapper.treeToValue(patched, Bambino.class);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.maranata.Api.feign.client;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.Api.dto.MembroDto;
 import com.maranata.Api.dto.PersonaDto;
 import feign.Headers;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@FeignClient(value = "api-membri", url = "http://localhost:8082/rest/membri/")
+@FeignClient(value = "api-membri", url = "http://localhost:8082/v1/membri/")
 public interface MembroFeignClient {
 
     public final String AUTH_TOKEN = "Authorization";
@@ -27,7 +28,7 @@ public interface MembroFeignClient {
     @PostMapping()
     MembroDto membroAdd(@RequestBody MembroDto membroDto);
 
-    @PatchMapping(path = "/{id_membro}" )
-    MembroDto membroUpdate(@RequestBody MembroDto membroDto,@PathVariable("id_membro") Long id);
+    @PatchMapping(path = "/{idMembro}")
+    ResponseEntity<MembroDto> membroUpdate(@RequestBody JsonPatch membroDto, @PathVariable("idMembro") Long idMembro);
 
 }

@@ -1,8 +1,11 @@
 package com.maranata.Api.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.Api.dto.MembroDto;
 import com.maranata.Api.service.MembroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,17 +32,17 @@ public class MembroController {
     }
 
     @PostMapping("/addMembro")
-    public MembroDto membroAdd(@RequestBody MembroDto membroDto){
-        return membroService.membroAdd(membroDto);
+    public ResponseEntity<MembroDto> membroAdd(@RequestBody MembroDto membroDto){
+        return new ResponseEntity<>(membroService.membroAdd(membroDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/add")
-    public MembroDto membroPersonaAdd(@RequestBody MembroDto membroDto){
-        return membroService.membroPersonaAdd(membroDto);
+    public ResponseEntity<MembroDto> membroPersonaAdd(@RequestBody MembroDto membroDto){
+        return new ResponseEntity<>(membroService.membroPersonaAdd(membroDto),HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public MembroDto membroUpdate(@RequestBody MembroDto membroDto,@PathVariable Long id){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<MembroDto> membroUpdate(@RequestBody JsonPatch membroDto, @PathVariable Long id){
         return  membroService.membroUpdate(membroDto,id);
     }
 }

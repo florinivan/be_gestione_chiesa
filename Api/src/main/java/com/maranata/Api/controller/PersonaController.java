@@ -5,6 +5,7 @@ import com.maranata.Api.dto.PersonaDto;
 import com.maranata.Api.service.PersonaService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,17 +32,17 @@ public class PersonaController {
     }
 
     @PostMapping("/add")
-    public PersonaDto personaAdd (@RequestBody PersonaDto personaDto){
+    public ResponseEntity<PersonaDto> personaAdd (@RequestBody PersonaDto personaDto){
         return personaService.personaAdd(personaDto);
     }
 
     @PostMapping("/addConiuge")
-    public PersonaDto coniugeAdd(@RequestBody ConiugeDto coniugeDto){
+    public ResponseEntity<PersonaDto> coniugeAdd(@RequestBody ConiugeDto coniugeDto){
         return  personaService.personaAdd(coniugeDto.getPersona());
     }
 
-    @PutMapping
-    public PersonaDto personaUpdate(@RequestBody PersonaDto personaDto,@PathVariable Long id){
+    @PutMapping("/update")
+    public ResponseEntity<PersonaDto> personaUpdate(@RequestBody PersonaDto personaDto, @PathVariable Long id){
         return personaService.personaUpdate(personaDto,id);
     }
 }

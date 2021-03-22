@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MembroDto {
 
-    private Long id;
+    private Long idMembro;
     private PersonaDto persona;
     private String codiceFiscaleConiuge;
     private String email;

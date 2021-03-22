@@ -51,10 +51,10 @@ public class MembroController {
     }
 
 
-    @PatchMapping(path = "/{id_membro}" )
-    public ResponseEntity<Membro>updateMembro(@PathVariable Long id, @RequestBody JsonPatch inMembro){
+    @PatchMapping(path = "/{idMembro}" )
+    public ResponseEntity<Membro>updateMembro(@PathVariable Long idMembro, @RequestBody JsonPatch inMembro){
         try {
-            Membro membro = membroRepository.findById(id).orElseThrow(RuntimeException::new);
+            Membro membro = membroRepository.findById(idMembro).orElseThrow(RuntimeException::new);
             Membro membroPatched = applyPatchToCustomer(inMembro, membro);
             membroService.updateMembro(membroPatched);
             return ResponseEntity.ok(membroPatched);

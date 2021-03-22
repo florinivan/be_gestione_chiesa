@@ -1,17 +1,15 @@
 package com.maranata.Api.feign.client;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.Api.dto.BambinoDto;
-import com.maranata.Api.dto.PersonaDto;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@FeignClient(value = "api-bambini", url = "http://localhost:8082/rest/bambini/")
+@FeignClient(value = "api-bambini", url = "http://localhost:8082/v1/bambini/")
 public interface BambinoFeignClient {
 
     public final String AUTH_TOKEN = "Authorization";
@@ -24,6 +22,9 @@ public interface BambinoFeignClient {
     Boolean  checkBambino (@RequestParam String codiceFiscale);
 
     @PostMapping
-    BambinoDto addBambino(BambinoDto bambinoDto);
+    ResponseEntity<BambinoDto> addBambino(@RequestBody BambinoDto bambinoDto);
+
+    @PatchMapping(path = "/{id}" )
+    ResponseEntity<BambinoDto> update(@PathVariable Long id, @RequestBody JsonPatch bambinoDto);
 
 }

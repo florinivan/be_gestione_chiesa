@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-
+@FeignClient(value = "api-persone", url = "http://localhost:8082/v1/persone/")
 public interface PersonaFeignClient {
 
     public final String AUTH_TOKEN = "Authorization";
@@ -24,12 +24,12 @@ public interface PersonaFeignClient {
     ResponseEntity<Collection<PersonaDto>> findBycodiceFiscale(@RequestParam("codiceFiscale") String codiceFiscale);
 
     @PostMapping
-    PersonaDto personaAdd(@RequestBody PersonaDto personaDto);
+    ResponseEntity<PersonaDto> personaAdd(@RequestBody PersonaDto personaDto);
 
     @PostMapping("/addConiuge")
-    ConiugeDto coniugeAdd(@RequestBody ConiugeDto coniugeDto);
+    ResponseEntity<ConiugeDto> coniugeAdd(@RequestBody ConiugeDto coniugeDto);
 
     @PatchMapping(path = "/{id}" )
-    PersonaDto personaUpdate(@RequestBody PersonaDto personaDto,@PathVariable Long id);
+    ResponseEntity<PersonaDto> personaUpdate(@RequestBody PersonaDto personaDto,@PathVariable Long id);
 
 }

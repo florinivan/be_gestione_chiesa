@@ -1,8 +1,10 @@
 package com.maranata.Api.controller;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.Api.dto.BambinoDto;
 import com.maranata.Api.service.BambinoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,12 @@ public class BambinoController {
     }
 
     @PostMapping("/add")
-    public BambinoDto bambinoAdd(@RequestBody BambinoDto bambinoDto){
+    public ResponseEntity<BambinoDto> bambinoAdd(@RequestBody BambinoDto bambinoDto){
         return bambinoService.bambinoAdd(bambinoDto);
     }
 
+    @PatchMapping("/update")
+    public ResponseEntity<BambinoDto> updateBambino(@PathVariable Long id, @RequestBody JsonPatch bambinoDto){
+        return bambinoService.bambinoUpdate(id,bambinoDto);
+    }
 }

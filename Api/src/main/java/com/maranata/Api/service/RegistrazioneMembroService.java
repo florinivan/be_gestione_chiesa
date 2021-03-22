@@ -1,16 +1,24 @@
 package com.maranata.Api.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.maranata.Api.dto.*;
 import com.maranata.Api.utils.MembroExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Collection;
 
 
 @Service
 public class RegistrazioneMembroService {
 
+    private static ObjectMapper objectMapper = new ObjectMapper();
     @Autowired
     MembroService membroService;
     @Autowired
@@ -44,4 +52,15 @@ public class RegistrazioneMembroService {
         }
         return registrazioneMembroDto;
     }
+
+    public static <T> T applyPatch(T originalObj, JsonPatch patch)
+            throws  IOException, JsonPatchException {
+        // Convert the original object to JsonNode
+        JsonNode originalObjNode = objectMapper.valueToTree(originalObj);
+        // Apply the patch
+        TreeNode patchedObjNode = patch.apply(originalObjNode);
+        // Convert the patched node to an updated obj
+        return objectMapper.treeToValue(patchedObjNode, (Class<T>) originalObj.getClass());
+    }
+
 }

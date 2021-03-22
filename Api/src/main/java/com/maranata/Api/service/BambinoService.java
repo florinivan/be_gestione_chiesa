@@ -1,5 +1,6 @@
 package com.maranata.Api.service;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.Api.dto.BambinoDto;
 import com.maranata.Api.feign.client.BambinoFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class BambinoService {
         return bambinoFeignClient.checkBambino(codiceFiscale);
     }
 
-    public BambinoDto bambinoAdd(BambinoDto bambinoDto) {
+    public ResponseEntity<BambinoDto> bambinoAdd(BambinoDto bambinoDto) {
         return bambinoFeignClient.addBambino(bambinoDto);
+    }
+
+    public ResponseEntity<BambinoDto> bambinoUpdate(Long id , JsonPatch bambinoDto){
+        return bambinoFeignClient.update(id,bambinoDto);
     }
 }

@@ -1,5 +1,6 @@
 package com.maranata.Api.service;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.Api.dto.MembroDto;
 import com.maranata.Api.feign.client.MembroFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class MembroService {
@@ -31,7 +31,7 @@ public class MembroService {
         return membroFeignClient.membroAdd(membroDto);
     }
 
-    public MembroDto membroUpdate(MembroDto membroDto,Long id){
+    public ResponseEntity<MembroDto> membroUpdate(JsonPatch membroDto, Long id){
         return membroFeignClient.membroUpdate(membroDto,id);
     }
 }
