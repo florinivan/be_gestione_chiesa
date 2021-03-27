@@ -1,11 +1,8 @@
 package com.maranata.budgetplanner.service;
 
 import com.maranata.budgetplanner.dao.BudgetRepository;
-import com.maranata.budgetplanner.dao.FlussoRepository;
 import com.maranata.budgetplanner.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,60 +13,65 @@ import java.util.Optional;
 public class BudgetService {
 
     @Autowired
-    CategoriaService categoriaService;
+    CategoryService categoryService;
     @Autowired
     BudgetRepository budgetRepository;
     @Autowired
-    FlussoService flussoService;
+    ValidationService validationService;
 
-    public List<Budget> findAll(){
+    public List<Budget> findAll() {
         return budgetRepository.findAll();
     }
 
-    public Optional<Budget> findById(Long id){
+    public List<Budget> findByCategory(Long categoryId) {
+        return budgetRepository.findBycategory(categoryId);
+    }
+
+    public Optional<Budget> findById(Long id) {
         return budgetRepository.findById(id);
     }
 
-    public List<Budget> findAllByFlussoAndPeriodo(Long flussoId, String  periodo){
-        return budgetRepository.findAllByFlussoAndPeriodo(flussoId,periodo);
+    public List<Budget> findByDate(Long startDate, Long endDate){
+        return budgetRepository.findByDate(startDate,endDate);
+    }
+
+    public List<Budget> findAllByValidationAndPeriod(Long validationId, Long startDate, Long endDate) {
+        return budgetRepository.findAllByValidationAndPeriod(validationId, startDate, endDate);
     }
 
     @Transactional
-    public Budget addBudgetByCategory (Budget budget){
-        Optional<Categoria> categoria = categoriaService.findByDescrizione(budget.getCategoria().getDescrizione());
-        List<FlussoValidazione> flusso = flussoService.findByIdUtente(budget.getFlusso().getIdUtente());
-        if(categoria.isPresent()&& categoria.get().getTipoCategoria()== TipoCategoria.BUGET||
-           !flusso.isEmpty()){
+    public Budget addBudget(Budget budget) {
+        Optional<Category> category = categoryService.findByDescription(budget.getCategory().getDescription());
+        List<Validation> validations = validationService.findByUserId(budget.getValidation().getUserId());
+        if (category.isPresent() || !validations.isEmpty()) {
             try {
                 budgetRepository.save(budget);
-            }catch (Exception e){
+            } catch (Exception e) {
                 //TOOD add custom exception
                 throw e;
             }
-        }else {
+        } else {
             //TOOD add custom exception
             throw new RuntimeException();
         }
         return budget;
     }
-
-    public ResponseEntity<Budget> update(Budget inBudget){
-        try{
-            Budget newBudget = budgetRepository.findById(inBudget.getId()).orElseThrow(RuntimeException::new);
-            newBudget.setNome(inBudget.getNome());
-            newBudget.setDataInizio(inBudget.getDataInizio());
-            newBudget.setTags(inBudget.getTags());
-            newBudget.setCategoria(inBudget.getCategoria());
-            newBudget.setDataFine(inBudget.getDataFine());
-            newBudget.setImportoAttuale(inBudget.getImportoAttuale());
-            newBudget.setImportoStimato(inBudget.getImportoStimato());
-            return new  ResponseEntity<>(budgetRepository.save(newBudget),HttpStatus.OK);
-        }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public Budget update(Long id,Budget newBudget) {
+        Optional<Budget> optionalBudget = budgetRepository.findById(id);
+        Budget budget = Optional.ofNullable(optionalBudget.get()).orElseThrow(() -> new RuntimeException("No data!"));
+        budget.setName(newBudget.getName());
+        budget.setStartDate(newBudget.getStartDate());
+        budget.setTags(newBudget.getTags());
+        budget.setCategory(newBudget.getCategory());
+        budget.setEndDate(newBudget.getEndDate());
+        budget.setActual(newBudget.getActual());
+        budget.setProjected(newBudget.getProjected());
+        budget.setValidation(newBudget.getValidation());
+        Budget updateBudget = budgetRepository.save(budget);
+        return updateBudget;
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         budgetRepository.deleteById(id);
     }
 

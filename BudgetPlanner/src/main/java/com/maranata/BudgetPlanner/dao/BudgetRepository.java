@@ -12,10 +12,17 @@ import java.util.List;
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget,Long> {
 
-    public List<Budget> findAllByCategoria(TipoCategoria categoria);
+    @Query(value= "SELECT *  FROM budgets b LEFT JOIN category c ON b.category_id = c.id WHERE b.category_id = :categoryId",
+            countQuery = "SELECT COUNT(*) FROM budgets",
+            nativeQuery = true)
+    public List<Budget> findBycategory(Long categoryId);
 
-    @Query(value = "SELECT * FROM budgets WHERE flusso_id = :flussoId AND periodo = :periodo", nativeQuery = true)
-    public List<Budget> findAllByFlussoAndPeriodo(Long flussoId, String periodo);
+    @Query(value = "SELECT * FROM budgets WHERE validation_id = :validationId" +
+            " AND end_date BETWEEN :startDate" +
+            " AND :endDate", nativeQuery = true)
+    public List<Budget> findAllByValidationAndPeriod(Long validationId, Long startDate, Long endDate);
 
+    @Query(value = "SELECT * FROM budgets WHERE end_date BETWEEN :startDate AND :endDate",nativeQuery = true)
+    public List<Budget> findByDate(Long startDate, Long endDate);
 
 }

@@ -9,12 +9,12 @@ import com.maranata.budgetplanner.dao.BudgetRepository;
 import com.maranata.budgetplanner.entity.*;
 import com.maranata.budgetplanner.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/budgets")
@@ -24,42 +24,41 @@ public class BudgetController {
 
     @Autowired
     BudgetService budgetService;
-    @Autowired
-    BudgetRepository budgetRepository;
 
     @GetMapping
     public ResponseEntity<List<Budget>> findAll(){
         return new ResponseEntity<>(budgetService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{flussoId}/{periodo}")
-    public ResponseEntity<List<Budget>>findAllByFlussoAndPeriodo(@PathVariable Long flussoId, @PathVariable String periodo){
-        return new ResponseEntity<>(budgetService.findAllByFlussoAndPeriodo(flussoId,periodo),HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Budget>> findById(@PathVariable Long id){
+        return new ResponseEntity<>(budgetService.findById(id),HttpStatus.OK);
     }
 
-    @GetMapping("/tipo")
-    public ResponseEntity<List<Budget>> findAllByCategoria(@RequestBody TipoCategoria categoria){
-        List<Budget> budget = budgetRepository.findAllByCategoria(categoria);
+    @GetMapping("/{startDate}/{endDate}")
+    public ResponseEntity<List<Budget>> findByDate(@PathVariable Long startDate,@PathVariable Long endDate){
+        return new ResponseEntity<>(budgetService.findByDate(startDate, endDate),HttpStatus.OK);
+    }
+
+    @GetMapping("/{validationId}/{startDate}/{endDate}")
+    public ResponseEntity<List<Budget>>findAllByRange(@PathVariable Long validationId, @PathVariable Long startDate,@PathVariable Long endDate){
+        return new ResponseEntity<>(budgetService.findAllByValidationAndPeriod(validationId,startDate,endDate),HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{categoryId}")
+    public ResponseEntity<List<Budget>> findByCategory(@PathVariable Long categoryId){
+        List<Budget> budget = budgetService.findByCategory(categoryId);
         return new ResponseEntity<>(budget,HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Budget> add(@RequestBody Budget budget){
-        return new ResponseEntity<>(budgetService.addBudgetByCategory(budget),HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<Budget> addBudget(@RequestBody Budget budget){
+        return new ResponseEntity<>(budgetService.addBudget(budget),HttpStatus.CREATED);
     }
 
-    @PatchMapping(path = "/{id}" )
-    public ResponseEntity<Budget> updateBudget(@PathVariable Long id, @RequestBody JsonPatch inBudget) {
-        try {
-            Budget budget = budgetService.findById(id).orElseThrow(RuntimeException::new);
-            Budget budgetPatched = applyPatchToBudget(inBudget, budget);
-            budgetService.update(budgetPatched);
-            return ResponseEntity.ok(budgetPatched);
-        } catch (JsonPatchException | JsonProcessingException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @PutMapping("/{id}" )
+    public ResponseEntity<Budget> updateBudget(@PathVariable Long id,@RequestBody Budget budget){
+        return  new ResponseEntity<>(budgetService.update(id,budget),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
