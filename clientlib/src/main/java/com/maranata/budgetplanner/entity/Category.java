@@ -6,12 +6,16 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="stato_validazione")
-public class StatoValidazione {
+@Table(name="categories")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String descrizione;
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    private CategoryType type;
 }
+

@@ -6,7 +6,7 @@ import lombok.Data;
 public class BudgetResponseDto {
 
     private Long id;
-    private Double importoStimato;
+    private Double projected;
     private String periodType;
 
 }

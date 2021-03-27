@@ -5,18 +5,18 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="flusso_validazione")
-public class FlussoValidazione {
+@Table(name="validations")
+public class Validation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name ="id_utente")
-    private Long idUtente;
+    @Column(name ="user_id")
+    private Long userId;
 
     @ManyToOne
-    @JoinColumn (name="stato_validazione_id")
-    private StatoValidazione stato;
+    @JoinColumn (name="validation_types_id")
+    private ValidationType validationType;
 
 }

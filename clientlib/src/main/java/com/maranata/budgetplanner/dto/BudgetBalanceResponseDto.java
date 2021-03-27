@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class BudgetBalanceResponseDto extends BudgetResponseDto{
 
-    private Double importoAttuale;
+    private Double actual;
     private LocalDate startDate;
     private LocalDate endDate;
 

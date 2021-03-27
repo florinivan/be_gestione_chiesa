@@ -2,9 +2,6 @@ package com.maranata.budgetplanner.entity;
 
 import lombok.Data;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -15,28 +12,25 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nome;
+    private String name;
 
-    private Long dataInizio;
+    private Long startDate;
 
-    private Long dataFine;
+    private Long endDate;
 
     private String tags;
 
-    private double importoStimato;
+    private double projected;
 
-    private double importoAttuale;
-
-    @Enumerated(EnumType.STRING)
-    private PeriodoBudget periodo;
+    private double actual;
 
     @ManyToOne
-    @JoinColumn(name="categoria_id")
-    private Categoria categoria;
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @OneToOne
-    @JoinColumn(name="flusso_id")
-    private  FlussoValidazione flusso;
+    @JoinColumn(name="validation_id")
+    private Validation validation;
 
 }
 

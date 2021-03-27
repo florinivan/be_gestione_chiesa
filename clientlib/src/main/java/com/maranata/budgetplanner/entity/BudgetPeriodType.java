@@ -1,7 +1,7 @@
 package com.maranata.budgetplanner.entity;
 
 
-public enum PeriodoBudget {
+public enum BudgetPeriodType {
     WEEKLY,
     MONTHLY,
     YEARLY,
