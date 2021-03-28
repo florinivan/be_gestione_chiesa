@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 
 @FeignClient(value = "api-bugets", url = "http://localhost:8084/v1/budgets/")
@@ -17,12 +18,21 @@ public interface BudgetFeignClient {
     @Headers("Content-Type: application/json")
     ResponseEntity<Collection<Budget>> budgetList();
 
-    @GetMapping("/{flussoId}/{periodo}")
-    List<Budget> findAllByFlussoAndPeriodo(@PathVariable Long flussoId, @PathVariable String periodo);
+    @GetMapping("/{id}")
+    Optional<Budget> findById(@PathVariable Long id);
+
+    @GetMapping("/{start}/{end}")
+    List<Budget>findByRange(@PathVariable Long start,@PathVariable Long end);
+
+    @GetMapping("/{validationId}/{startDate}/{endDate}")
+    List<Budget> findAllByRange(@PathVariable Long validationId, @PathVariable Long startDate,@PathVariable Long endDate);
+
+    @GetMapping("/get/{categoryId}")
+    List<Budget> findByCategory(@PathVariable Long categoryId);
 
     @PostMapping("/add")
     Budget addBudget(@RequestBody Budget budget);
 
-    @PatchMapping(path = "/{id}" )
-    Budget updateBudget(@RequestBody Budget budgetDto,@PathVariable long id);
+    @PutMapping("/{id}" )
+    Budget updateBudget(@PathVariable Long id,@RequestBody Budget budget);
 }

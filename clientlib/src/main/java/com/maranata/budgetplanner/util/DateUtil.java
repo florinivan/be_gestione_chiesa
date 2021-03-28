@@ -33,4 +33,11 @@ public class DateUtil {
     public static String toFriendlyMonthDisplay(Long value) {
         return toLocalDate(value).getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault());
     }
+
+    public static LocalDate toLocalDateBy(int month, int year) {
+        if(month>0){
+            return LocalDateTime.of(year,month,1,0,0).toLocalDate();
+        }
+        return LocalDateTime.of(year,1,1,0,0).toLocalDate();
+    }
 }
