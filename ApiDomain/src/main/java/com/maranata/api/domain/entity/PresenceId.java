@@ -8,11 +8,9 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class PresenzaId implements Serializable {
+public class PresenceId implements Serializable {
 
-    @Column(name= "NOME_COGNOME")
-    public String nomeCognome;
+    public String nameSurname;
 
-    @Column(name = "DATA_PRESENZA")
-    public int dataPresenza;
+    public int attendingDate;
 }
