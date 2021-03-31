@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.provider.authentication.OAuth2Authent
 import org.springframework.stereotype.Component;
 
 @Component
-public class PersonaClientInterceptor implements RequestInterceptor {
+public class PersonClientInterceptor implements RequestInterceptor {
 
     private static final String AUTHORIZATION_HEADER="Authorization";
     private static final String TOKEN_TYPE = "Bearer";

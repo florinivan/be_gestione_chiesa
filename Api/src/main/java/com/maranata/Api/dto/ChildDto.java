@@ -3,9 +3,8 @@ package com.maranata.Api.dto;
 import lombok.Data;
 
 @Data
-public class ConiugeDto  {
+public class ChildDto {
 
-    private PersonaDto persona;
+    private PersonDto person;
 
 }
-

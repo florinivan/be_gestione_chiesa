@@ -1,6 +1,6 @@
 package com.maranata.Api.dto;
 
-public class InformazioniMembroDto {
+public class MemberInformation {
 
     private boolean flgConfessioneFede;
     private boolean flgPrivace;
