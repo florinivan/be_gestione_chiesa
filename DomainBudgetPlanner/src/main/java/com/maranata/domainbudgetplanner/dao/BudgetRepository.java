@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface BudgetRepository extends JpaRepository<Budget,Long> {
 
-    @Query(value= "SELECT *  FROM budgets b LEFT JOIN category c ON b.category_id = c.id WHERE b.category_id = :categoryId",
+    @Query(value= "SELECT *  FROM budgets b LEFT JOIN categories c ON b.category_id = c.id WHERE b.category_id = :categoryId",
             countQuery = "SELECT COUNT(*) FROM budgets",
             nativeQuery = true)
     public List<Budget> findBycategory(Long categoryId);
