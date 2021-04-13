@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.maranata</groupId>
-	<artifactId>ApiBudgetPlanner</artifactId>
+	<artifactId>apibudgetplanner</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ApiBudgetPlanner</name>
 	<description>ApiBudgetPlanner project for Spring Boot</description>
@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.maranata</groupId>
-			<artifactId>CommonBean</artifactId>
+			<artifactId>commonbean</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

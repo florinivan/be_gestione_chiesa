@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.maranata</groupId>
-	<artifactId>ApiManagement</artifactId>
+	<artifactId>apimanagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ApiManagement</name>
 	<description>ApiManagement project for Spring Boot</description>

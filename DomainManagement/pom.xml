@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.maranata</groupId>
-	<artifactId>DomainManagement</artifactId>
+	<artifactId>domainmanagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>DomainManagement</name>
 	<description>Api Domain for members management </description>
