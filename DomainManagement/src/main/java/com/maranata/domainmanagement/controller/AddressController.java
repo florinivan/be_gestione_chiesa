@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.maranata.commonbean.management.entity.Address;
 import com.maranata.domainmanagement.dao.AddressRepository;
-import com.maranata.domainmanagement.entity.Address;
 import com.maranata.domainmanagement.service.AddressService;
 
 import org.springframework.beans.factory.annotation.Autowired;

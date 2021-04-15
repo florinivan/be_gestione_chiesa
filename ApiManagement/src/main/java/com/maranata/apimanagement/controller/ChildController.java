@@ -1,9 +1,9 @@
 package com.maranata.apimanagement.controller;
 
 import com.github.fge.jsonpatch.JsonPatch;
-import com.maranata.apimanagement.dto.ChildDto;
 import com.maranata.apimanagement.service.ChildService;
 
+import com.maranata.commonbean.management.entity.Child;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ public class ChildController {
     ChildService childService;
 
     @GetMapping("/list")
-    public Collection<ChildDto> childList(Model model) {
+    public Collection<Child> childList(Model model) {
         model.addAttribute("children", childService.childList().getBody());
         return childService.childList().getBody();
     }
@@ -31,12 +31,12 @@ public class ChildController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ChildDto> childAdd(@RequestBody ChildDto childDto){
-        return childService.childAdd(childDto);
+    public ResponseEntity<Child> childAdd(@RequestBody Child child){
+        return childService.childAdd(child);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<ChildDto> childUpdate (@PathVariable Long id, @RequestBody JsonPatch childDto){
-        return childService.childUpdate(id,childDto);
+    public ResponseEntity<Child> childUpdate (@PathVariable Long id, @RequestBody JsonPatch child){
+        return childService.childUpdate(id,child);
     }
 }

@@ -1,12 +1,12 @@
 package com.maranata.apimanagement.feign.client;
 
+import com.maranata.commonbean.management.entity.Person;
+import com.maranata.commonbean.management.entity.Spouse;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.maranata.apimanagement.dto.PersonDto;
-import com.maranata.apimanagement.dto.SpouseDto;
 
 import java.util.Collection;
 
@@ -17,19 +17,20 @@ public interface PersonFeignClient {
 
     @GetMapping
     @Headers("Content-Type: application/json")
-    ResponseEntity<Collection<PersonDto>> personList();
+    ResponseEntity<Collection<Person>> personList();
 
     @GetMapping("/find")
     @Headers("Content-Type: application/json")
-    ResponseEntity<Collection<PersonDto>> findBypersonalNumber(@RequestParam("personalNumber") String personalNumber);
+    ResponseEntity<Collection<Person>> findBypersonalNumber(@RequestParam("personalNumber") String personalNumber);
 
     @PostMapping
-    ResponseEntity<PersonDto> personAdd(@RequestBody PersonDto personDto);
+    ResponseEntity<Person> personAdd(@RequestBody Person person);
 
     @PostMapping("/addSpouse")
-    ResponseEntity<SpouseDto> spouseAdd(@RequestBody SpouseDto spouseDto);
+    ResponseEntity<Spouse> spouseAdd(@RequestBody Spouse spouse
+    );
 
     @PatchMapping(path = "/{id}" )
-    ResponseEntity<PersonDto> personUpdate(@RequestBody PersonDto personDto, @PathVariable Long id);
+    ResponseEntity<Person> personUpdate(@RequestBody Person person, @PathVariable Long id);
 
 }

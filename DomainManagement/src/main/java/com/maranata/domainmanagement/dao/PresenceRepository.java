@@ -1,8 +1,7 @@
 package com.maranata.domainmanagement.dao;
 
+import com.maranata.commonbean.management.entity.Presence;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.maranata.domainmanagement.entity.Presence;
 
 public interface PresenceRepository extends JpaRepository<Presence,String> {
 }

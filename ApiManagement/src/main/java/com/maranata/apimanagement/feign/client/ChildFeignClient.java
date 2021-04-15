@@ -1,8 +1,8 @@
 package com.maranata.apimanagement.feign.client;
 
 import com.github.fge.jsonpatch.JsonPatch;
-import com.maranata.apimanagement.dto.ChildDto;
 
+import com.maranata.commonbean.management.entity.Child;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,15 @@ public interface ChildFeignClient {
 
     @GetMapping
     @Headers("Content-Type: application/json")
-    ResponseEntity<Collection<ChildDto>> childList();
+    ResponseEntity<Collection<Child>> childList();
 
     @GetMapping("/check")
     Boolean checkChild(@RequestParam String personalNumber);
 
     @PostMapping
-    ResponseEntity<ChildDto> addChild(@RequestBody ChildDto childDto);
+    ResponseEntity<Child> addChild(@RequestBody Child child);
 
     @PatchMapping(path = "/{id}" )
-    ResponseEntity<ChildDto> update(@PathVariable Long id, @RequestBody JsonPatch childDto);
+    ResponseEntity<Child> update(@PathVariable Long id, @RequestBody JsonPatch child);
 
 }

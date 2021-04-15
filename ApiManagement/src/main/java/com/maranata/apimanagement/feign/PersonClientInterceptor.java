@@ -1,4 +1,4 @@
-package com.maranata.apimanagement.feign;
+/*package com.maranata.apimanagement.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -22,4 +22,4 @@ public class PersonClientInterceptor implements RequestInterceptor {
             requestTemplate.header(AUTHORIZATION_HEADER, String.format("%s %s", TOKEN_TYPE, details.getTokenValue()));
         }
     }
-}
+}*/
