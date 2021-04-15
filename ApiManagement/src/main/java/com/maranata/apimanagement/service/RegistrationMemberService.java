@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
-import com.maranata.apimanagement.dto.*;
+import com.maranata.commonbean.management.dto.RegistrationMemberDto;
+import com.maranata.commonbean.management.entity.*;
 import com.maranata.apimanagement.utils.ExistMemberException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +31,24 @@ public class RegistrationMemberService {
     public RegistrationMemberDto memberRegistration(RegistrationMemberDto registrationMemberDto)  {
 
         if (registrationMemberDto != null) {
-            MemberDto memberDto = registrationMemberDto.getMemberDto();
-            PersonDto personDto = registrationMemberDto.getMemberDto().getPerson();
-            SpouseDto spouseDto = registrationMemberDto.getSpouseDto();
-            if(memberService.memberCheck(memberDto.getPerson().getPersonalNumber())){
-                throw new ExistMemberException(String.format("membro with cf %s already exists", memberDto.getPerson().getPersonalNumber()));
+            Member member = registrationMemberDto.getMember();
+            Person person = registrationMemberDto.getMember().getPerson();
+            Spouse dtoSpouseDto = registrationMemberDto.getSpouse();
+            if(memberService.memberCheck(member.getPerson().getPersonalNumber())){
+                throw new ExistMemberException(String.format("membro with cf %s already exists", member.getPerson().getPersonalNumber()));
             }else{
-                Collection<PersonDto> personaListDto = personService.findBypersonalNumber(memberDto.getPerson().getPersonalNumber()).getBody();
+                Collection<Person> personaListDto = personService.findBypersonalNumber(member.getPerson().getPersonalNumber()).getBody();
                 if(personaListDto!=null && !personaListDto.isEmpty()){
-                    PersonDto personDtoByCF =personaListDto.stream().findAny().get();
-                    personService.personUpdate(personDto, personDtoByCF.getId());
-                    registrationMemberDto.setMemberDto(memberService.memberAdd(memberDto));
+                    Person personDtoByCF =personaListDto.stream().findAny().get();
+                    personService.personUpdate(person, personDtoByCF.getId());
+                    registrationMemberDto.setMember(memberService.memberAdd(member));
                 }else{
-                    registrationMemberDto.setMemberDto(memberService.memberPersonAdd(memberDto));
+                    registrationMemberDto.setMember(memberService.memberPersonAdd(member));
                 }
                 registrationMemberDto.getChildren().forEach(bambinoDto->{
                     childService.childAdd(bambinoDto);
                 });
-                personService.spouseAdd(spouseDto);
+                personService.spouseAdd(dtoSpouseDto);
             }
         }
         return registrationMemberDto;

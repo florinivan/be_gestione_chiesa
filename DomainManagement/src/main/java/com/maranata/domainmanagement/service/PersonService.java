@@ -1,5 +1,9 @@
 package com.maranata.domainmanagement.service;
 
+import com.maranata.commonbean.management.entity.Associate;
+import com.maranata.commonbean.management.entity.Child;
+import com.maranata.commonbean.management.entity.Member;
+import com.maranata.commonbean.management.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,10 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.maranata.domainmanagement.dao.*;
-import com.maranata.domainmanagement.entity.Associate;
-import com.maranata.domainmanagement.entity.Child;
-import com.maranata.domainmanagement.entity.Member;
-import com.maranata.domainmanagement.entity.Person;
 
 import java.util.List;
 import java.util.Optional;

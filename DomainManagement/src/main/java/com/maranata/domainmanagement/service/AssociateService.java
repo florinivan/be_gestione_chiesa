@@ -1,12 +1,13 @@
 package com.maranata.domainmanagement.service;
 
+import com.maranata.commonbean.management.entity.Associate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.maranata.domainmanagement.dao.AssociateRepository;
-import com.maranata.domainmanagement.entity.Associate;
+
 
 @Service
 public class AssociateService {

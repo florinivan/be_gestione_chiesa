@@ -1,9 +1,9 @@
 package com.maranata.apimanagement.service;
 
 import com.github.fge.jsonpatch.JsonPatch;
-import com.maranata.apimanagement.dto.ChildDto;
 import com.maranata.apimanagement.feign.client.ChildFeignClient;
 
+import com.maranata.commonbean.management.entity.Child;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class ChildService {
     @Autowired
     private ChildFeignClient childFeignClient;
 
-    public ResponseEntity<Collection<ChildDto>> childList(){
+    public ResponseEntity<Collection<Child>> childList(){
         return childFeignClient.childList();
     }
 
@@ -24,11 +24,11 @@ public class ChildService {
         return childFeignClient.checkChild(personalNumber);
     }
 
-    public ResponseEntity<ChildDto> childAdd(ChildDto childDto) {
-        return childFeignClient.addChild(childDto);
+    public ResponseEntity<Child> childAdd(Child child) {
+        return childFeignClient.addChild(child);
     }
 
-    public ResponseEntity<ChildDto> childUpdate(Long id , JsonPatch childDto){
-        return childFeignClient.update(id,childDto);
+    public ResponseEntity<Child> childUpdate(Long id , JsonPatch child){
+        return childFeignClient.update(id,child);
     }
 }

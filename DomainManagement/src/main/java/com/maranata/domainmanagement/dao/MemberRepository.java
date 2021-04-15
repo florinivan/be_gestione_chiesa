@@ -1,9 +1,9 @@
 package com.maranata.domainmanagement.dao;
 
+import com.maranata.commonbean.management.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.maranata.domainmanagement.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 

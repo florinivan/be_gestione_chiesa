@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.maranata.commonbean.management.entity.Child;
 import com.maranata.domainmanagement.dao.ChildRepository;
 import com.maranata.domainmanagement.dao.PersonRepository;
-import com.maranata.domainmanagement.entity.Child;
 import com.maranata.domainmanagement.service.ChildService;
 import com.maranata.domainmanagement.service.PersonService;
 

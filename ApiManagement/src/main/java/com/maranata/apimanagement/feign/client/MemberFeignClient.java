@@ -1,8 +1,8 @@
 package com.maranata.apimanagement.feign.client;
 
 import com.github.fge.jsonpatch.JsonPatch;
-import com.maranata.apimanagement.dto.MemberDto;
 
+import com.maranata.commonbean.management.entity.Member;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +17,18 @@ public interface MemberFeignClient {
 
     @GetMapping
     @Headers("Content-Type: application/json")
-    ResponseEntity<Collection<MemberDto>> memberList();
+    ResponseEntity<Collection<Member>> memberList();
 
     @GetMapping("/check")
     Boolean checkMember(@RequestParam String personalNumber);
 
     @PostMapping("/add")
-    MemberDto memberPersonAdd(@RequestBody MemberDto memberDto);
+    Member memberPersonAdd(@RequestBody Member member);
 
     @PostMapping()
-    MemberDto memberAdd(@RequestBody MemberDto memberDto);
+    Member memberAdd(@RequestBody Member member);
 
     @PatchMapping(path = "/{id}")
-    ResponseEntity<MemberDto> memberUpdate(@RequestBody JsonPatch memberDto, @PathVariable("id") Long id);
+    ResponseEntity<Member> memberUpdate(@RequestBody JsonPatch member, @PathVariable("id") Long id);
 
 }

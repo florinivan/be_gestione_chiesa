@@ -1,19 +1,19 @@
 package com.maranata.apimanagement.controller;
 
+import com.maranata.commonbean.management.entity.Person;
+import com.maranata.commonbean.management.entity.Spouse;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.maranata.apimanagement.dto.PersonDto;
-import com.maranata.apimanagement.dto.SpouseDto;
 import com.maranata.apimanagement.service.PersonService;
 
 import java.util.Collection;
 
-@Api(value = "Persona Resource")
-@RequestMapping("persona")
+@Api(value = "Person Resource")
+@RequestMapping("person")
 @RestController
 public class PersonController {
 
@@ -21,29 +21,29 @@ public class PersonController {
     private PersonService personService;
 
     @GetMapping("/list")
-    public Collection<PersonDto> personaList(Model model) {
-        model.addAttribute("persone", personService.personList().getBody());
+    public Collection<Person> personaList(Model model) {
+        model.addAttribute("persons", personService.personList().getBody());
         return personService.personList().getBody();
     }
 
     @GetMapping("/edit")
-    public Collection<PersonDto> personaOne(@RequestParam String codiceFiscale, Model model) {
-        model.addAttribute("codiceFiscale", personService.findBypersonalNumber(codiceFiscale).getBody());
-        return personService.findBypersonalNumber(codiceFiscale).getBody();
+    public Collection<Person> personOne(@RequestParam String personalNumber, Model model) {
+        model.addAttribute("personalNumber", personService.findBypersonalNumber(personalNumber).getBody());
+        return personService.findBypersonalNumber(personalNumber).getBody();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<PersonDto> personaAdd (@RequestBody PersonDto personDto){
-        return personService.personAdd(personDto);
+    public ResponseEntity<Person> personAdd (@RequestBody Person person){
+        return personService.personAdd(person);
     }
 
-    @PostMapping("/addConiuge")
-    public ResponseEntity<PersonDto> coniugeAdd(@RequestBody SpouseDto spouseDto){
-        return  personService.personAdd(spouseDto.getPerson());
+    @PostMapping("/addSpouse")
+    public ResponseEntity<Person> spouseAdd(@RequestBody Spouse spouse){
+        return  personService.personAdd(spouse.getPerson());
     }
 
     @PutMapping("/update")
-    public ResponseEntity<PersonDto> personaUpdate(@RequestBody PersonDto personDto, @PathVariable Long id){
-        return personService.personUpdate(personDto,id);
+    public ResponseEntity<Person> personUpdate(@RequestBody Person person, @PathVariable Long id){
+        return personService.personUpdate(person,id);
     }
 }
