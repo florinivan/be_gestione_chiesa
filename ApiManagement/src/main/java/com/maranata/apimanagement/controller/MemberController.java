@@ -41,8 +41,8 @@ public class MemberController {
         return new ResponseEntity<>(memberService.memberPersonAdd(member),HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Member> memberUpdate(@RequestBody JsonPatch member, @PathVariable Long id){
-        return  memberService.memberUpdate(member,id);
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<Member> memberUpdate( @PathVariable Long id,@RequestBody JsonPatch member){
+        return  memberService.memberUpdate(id,member);
     }
 }

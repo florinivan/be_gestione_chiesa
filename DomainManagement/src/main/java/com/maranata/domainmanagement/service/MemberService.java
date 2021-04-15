@@ -16,7 +16,7 @@ public class MemberService {
 
     public ResponseEntity<Member> update(Member inMember){
         try {
-            Member newMember = memberRepository.findById(inMember.getPerson().getId()).orElseThrow(RuntimeException::new);
+            Member newMember = memberRepository.findById(inMember.getId()).orElseThrow(RuntimeException::new);
             newMember.setId(inMember.getId());
             newMember.setPhoneNumber(inMember.getPhoneNumber());
             newMember.setStartDiscipline(inMember.getStartDiscipline());
@@ -24,6 +24,7 @@ public class MemberService {
             newMember.setEmail(inMember.getEmail());
             newMember.setEndDiscipline(inMember.getEndDiscipline());
             newMember.setPnSpouse(inMember.getPnSpouse());
+            newMember.setStatus(inMember.getStatus());
             newMember.setTransferredDate(inMember.getTransferredDate());
             memberRepository.save(newMember);
             return ResponseEntity.ok(newMember);

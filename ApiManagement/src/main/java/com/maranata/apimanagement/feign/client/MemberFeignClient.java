@@ -5,6 +5,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.maranata.commonbean.management.entity.Member;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,9 @@ public interface MemberFeignClient {
     @PostMapping()
     Member memberAdd(@RequestBody Member member);
 
-    @PatchMapping(path = "/{id}")
-    ResponseEntity<Member> memberUpdate(@RequestBody JsonPatch member, @PathVariable("id") Long id);
+    @PatchMapping(path = "/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Member> memberUpdate( @PathVariable Long id,@RequestBody JsonPatch member);
 
 }

@@ -1,5 +1,6 @@
 package com.maranata.commonbean.management.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,19 +26,23 @@ public class Member implements Serializable {
 
     private String pnSpouse;
 
-    private int baptismDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date baptismDate;
 
     private String baptismPlace;
 
     private String baptismOfficer;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date transferredDate;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date startDiscipline;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDiscipline;
 
     private String attributes;
