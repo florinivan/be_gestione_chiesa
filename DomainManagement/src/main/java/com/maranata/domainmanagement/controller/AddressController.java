@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/adress")
+@RequestMapping("/address")
 public class AddressController {
 
     private ObjectMapper objectMapper = new ObjectMapper();

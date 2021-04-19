@@ -32,7 +32,7 @@ public class MemberService {
         return memberFeignClient.memberAdd(member);
     }
 
-    public ResponseEntity<Member> memberUpdate(JsonPatch member, Long id){
-        return memberFeignClient.memberUpdate(member,id);
+    public ResponseEntity<Member> memberUpdate(Long id,JsonPatch member){
+        return memberFeignClient.memberUpdate(id,member);
     }
 }

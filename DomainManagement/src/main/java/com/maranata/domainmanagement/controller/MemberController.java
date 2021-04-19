@@ -48,7 +48,7 @@ public class MemberController {
 
     @PostMapping("/add")
     public ResponseEntity<Member> addPersonMember(@RequestBody Member member) {
-        return new ResponseEntity<>(personService.addPersonMember(member),HttpStatus.OK);
+        return new ResponseEntity<>(personService.addPersonMember(member),HttpStatus.CREATED);
     }
 
 
@@ -66,7 +66,7 @@ public class MemberController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus>deleteMember(@PathVariable Long id){
         memberRepository.deleteAll();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

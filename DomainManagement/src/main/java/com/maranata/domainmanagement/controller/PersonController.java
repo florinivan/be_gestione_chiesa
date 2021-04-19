@@ -68,8 +68,8 @@ public class PersonController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deletePerson(@PathVariable Long idPerson) {
-       personRepository.deleteById(idPerson);
+    public ResponseEntity<HttpStatus> deletePerson(@PathVariable Long id) {
+       personRepository.deleteById(id);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
