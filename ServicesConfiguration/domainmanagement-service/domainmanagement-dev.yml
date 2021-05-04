@@ -1,0 +1,4 @@
+member:
+ rent:
+  min: 8
+  max: 31
